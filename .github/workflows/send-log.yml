@@ -35,5 +35,5 @@ jobs:
               "workflow": "${{ github.workflow }}"
             }
             }' \
-            http//5d43081f.in.prod.onum.com:9443/services/collector
+            http://5d43081f.in.prod.onum.com:9443/services/collector
 

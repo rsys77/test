@@ -22,6 +22,7 @@ jobs:
             -H "Authorization: Splunk 6c976103-9cc8-4af2-bd9b-7a846afff787" \
             -H "Content-Type: application/json" \
             -d '{
+           "event": {
               "source": "github_actions",
               "message": "github_event_from_rsys77_test",
               "repo": "${{ github.repository }}",
@@ -32,5 +33,6 @@ jobs:
               "sha": "${{ github.sha }}",
               "run_id": "${{ github.run_id }}",
               "workflow": "${{ github.workflow }}"
+            }
             }' \
             http://5d43081f.in.prod.onum.com:9443/services/collector

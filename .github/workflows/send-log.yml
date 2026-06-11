@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Send GitHub event
         run: |
-          curl -v -k \
+          curl -v \
             -H "Authorization: Splunk 6c976103-9cc8-4af2-bd9b-7a846afff787" \
             -H "Content-Type: application/json" \
             -d '{

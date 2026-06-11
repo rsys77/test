@@ -1,0 +1,36 @@
+name: Create Test GitHub Events
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  create-events:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create push event
+        run: |
+          echo "Test event generated at $(date -u)" >> test-events.log
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add test-events.log
+          git commit -m "Generate test event $(date -u)" || echo "No changes"
+          git push
+
+      - name: Create issue event
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Automated Onum test issue $(date -u)" \
+            --body "This issue was created automatically to generate a GitHub issue event for Onum testing."

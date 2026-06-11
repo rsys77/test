@@ -1,0 +1,36 @@
+name: Send GitHub Events to Onum
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  issues:
+    types: [opened, edited, closed, reopened]
+  release:
+    types: [published, edited, deleted]
+
+jobs:
+  send-event:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send GitHub event to Onum
+        run: |
+          curl -v -X POST \
+            -H "Authorization: Splunk 6c976103-9cc8-4af2-bd9b-7a846afff787" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "source":"github_actions",
+              "repo":"${{ github.repository }}",
+              "actor":"${{ github.actor }}",
+              "event_name":"${{ github.event_name }}",
+              "ref":"${{ github.ref }}",
+              "ref_name":"${{ github.ref_name }}",
+              "sha":"${{ github.sha }}",
+              "run_id":"${{ github.run_id }}",
+              "run_number":"${{ github.run_number }}",
+              "workflow":"${{ github.workflow }}",
+              "server_url":"${{ github.server_url }}",
+              "repository_url":"${{ github.server_url }}/${{ github.repository }}"
+            }' \
+            http://5d43081f.in.prod.onum.com:9443/services/collector

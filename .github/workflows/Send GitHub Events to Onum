@@ -2,6 +2,8 @@ name: Send GitHub Events to Onum
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
   push:
   pull_request:
   issues:

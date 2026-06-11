@@ -32,7 +32,9 @@ jobs:
               "branch": "${{ github.ref_name }}",
               "sha": "${{ github.sha }}",
               "run_id": "${{ github.run_id }}",
-              "workflow": "${{ github.workflow }}"
+              "workflow": "${{ github.workflow }}",
+              "event_timestamp": "${{ github.event.head_commit.timestamp }}",
+              "ingest_timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"
             }
             }' \
             http://5d43081f.in.prod.onum.com:9443/services/collector

@@ -1,5 +1,5 @@
 name: Send Log
-Test event from Onum validation
+
 on:
   workflow_dispatch:
   push:

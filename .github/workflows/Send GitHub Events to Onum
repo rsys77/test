@@ -5,34 +5,32 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   push:
-  pull_request:
   issues:
-    types: [opened, edited, closed, reopened]
+  create:
+  delete:
+  pull_request:
   release:
-    types: [published, edited, deleted]
 
 jobs:
-  send-event:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send GitHub event to Onum
+      - name: Send GitHub event
         run: |
-          curl -v -X POST \
+          curl -v \
             -H "Authorization: Splunk 6c976103-9cc8-4af2-bd9b-7a846afff787" \
             -H "Content-Type: application/json" \
             -d '{
-              "source":"github_actions",
-              "repo":"${{ github.repository }}",
-              "actor":"${{ github.actor }}",
-              "event_name":"${{ github.event_name }}",
-              "ref":"${{ github.ref }}",
-              "ref_name":"${{ github.ref_name }}",
-              "sha":"${{ github.sha }}",
-              "run_id":"${{ github.run_id }}",
-              "run_number":"${{ github.run_number }}",
-              "workflow":"${{ github.workflow }}",
-              "server_url":"${{ github.server_url }}",
-              "repository_url":"${{ github.server_url }}/${{ github.repository }}"
+              "source": "github_actions",
+              "message": "github_event_from_rsys77_test",
+              "repo": "${{ github.repository }}",
+              "actor": "${{ github.actor }}",
+              "event": "${{ github.event_name }}",
+              "ref": "${{ github.ref }}",
+              "branch": "${{ github.ref_name }}",
+              "sha": "${{ github.sha }}",
+              "run_id": "${{ github.run_id }}",
+              "workflow": "${{ github.workflow }}"
             }' \
             http://5d43081f.in.prod.onum.com:9443/services/collector
